@@ -177,7 +177,7 @@ public class ViberBot {
                     .url(API_URL + endpoint.getPath())
                     .addHeader(AUTH_TOKEN_HEADER, token)
                     .addHeader(HttpHeaders.USER_AGENT, USER_AGENT)
-                    .post(RequestBody.create(content, MediaType.parse(CONTENT_TYPE)))
+                    .post(RequestBody.create(MediaType.parse(CONTENT_TYPE), content))
                     .build()).execute();
             ResponseBody body = httpResponse.body();
             if (body == null) {

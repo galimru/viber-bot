@@ -2,8 +2,6 @@ package com.viber.bot.server;
 
 import com.google.common.base.Preconditions;
 import org.glassfish.grizzly.http.server.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -12,8 +10,6 @@ public class CallbackServer {
     private final static String SERVER_NAME = "grizzly";
     private final static String DEFAULT_HOST = "localhost";
     private final static int DEFAULT_PORT = 80;
-
-    private Logger logger = LoggerFactory.getLogger(CallbackServer.class);
 
     private HttpServer httpServer;
 
@@ -48,11 +44,9 @@ public class CallbackServer {
         NetworkListener networkListener = new NetworkListener(SERVER_NAME, host, port);
         httpServer.addListener(networkListener);
         httpServer.start();
-        logger.info("Listening address {}:{} for callback requests", host, port);
     }
 
     public void shutdown() {
         httpServer.shutdown();
-        logger.info("Callback server shutdown");
     }
 }
