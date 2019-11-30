@@ -1,7 +1,6 @@
 package com.viber.bot;
 
-import com.viber.bot.event.EventType;
-import com.viber.bot.message.TextMessage;
+import com.viber.bot.messages.TextMessage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ public class EventListenerTest {
     @Test
     public void shouldReceiveWebhookEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
-        viberBot.addEventListener(EventType.WEBHOOK, request -> {
+        viberBot.addWebhookListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
@@ -35,7 +34,7 @@ public class EventListenerTest {
     public void shouldReceiveMessageEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
-        viberBot.addEventListener(EventType.MESSAGE, request -> {
+        viberBot.addMessageListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.sendMessage(Constants.VIBER_USER_ID, new TextMessage("Please write message to continue testing"));
@@ -46,7 +45,7 @@ public class EventListenerTest {
     public void shouldReceiveSeenEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
-        viberBot.addEventListener(EventType.SEEN, request -> {
+        viberBot.addSeenListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.sendMessage(Constants.VIBER_USER_ID, new TextMessage("Please open this message to continue testing"));
@@ -57,7 +56,7 @@ public class EventListenerTest {
     public void shouldReceiveDeliveredEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
-        viberBot.addEventListener(EventType.DELIVERED, request -> {
+        viberBot.addDeliveredListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.sendMessage(Constants.VIBER_USER_ID, new TextMessage("This message should be delivered"));
@@ -68,7 +67,7 @@ public class EventListenerTest {
     public void shouldReceiveSubscribedEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
-        viberBot.addEventListener(EventType.SUBSCRIBED, request -> {
+        viberBot.addSubscribedListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.sendMessage(Constants.VIBER_USER_ID, new TextMessage("Please subscribe to continue testing"));
@@ -79,7 +78,7 @@ public class EventListenerTest {
     public void shouldReceiveUnsubscribedEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
-        viberBot.addEventListener(EventType.UNSUBSCRIBED, request -> {
+        viberBot.addUnsubscribedListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.sendMessage(Constants.VIBER_USER_ID, new TextMessage("Please unsubscribe to continue testing"));
@@ -90,10 +89,11 @@ public class EventListenerTest {
     public void shouldReceiveConversationStartedEvent() {
         AtomicBoolean eventReceived = new AtomicBoolean();
         viberBot.setWebhook(Constants.WEBHOOK_HOST + Constants.WEBHOOK_PATH);
-        viberBot.addEventListener(EventType.CONVERSATION_STARTED, request -> {
+        viberBot.addConversationStartedListener((event, response) -> {
             eventReceived.set(true);
         });
         viberBot.sendMessage(Constants.VIBER_USER_ID, new TextMessage("Please start conversation to continue testing"));
         await().atMost(60, TimeUnit.SECONDS).untilTrue(eventReceived);
     }
+
 }

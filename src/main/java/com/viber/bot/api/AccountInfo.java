@@ -3,9 +3,9 @@ package com.viber.bot.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.viber.bot.event.EventType;
-import com.viber.bot.message.Location;
-import com.viber.bot.message.Profile;
+import com.viber.bot.events.EventType;
+import com.viber.bot.messages.Location;
+import com.viber.bot.messages.Profile;
 
 import java.util.List;
 
@@ -56,103 +56,116 @@ public class AccountInfo extends ApiResponse {
         return id;
     }
 
-    public void setId(String id) {
+    public AccountInfo setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getChatHostname() {
         return chatHostname;
     }
 
-    public void setChatHostname(String chatHostname) {
+    public AccountInfo setChatHostname(String chatHostname) {
         this.chatHostname = chatHostname;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public AccountInfo setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public AccountInfo setUri(String uri) {
         this.uri = uri;
+        return this;
     }
 
     public String getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public AccountInfo setIcon(String icon) {
         this.icon = icon;
+        return this;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public AccountInfo setCategory(String category) {
         this.category = category;
+        return this;
     }
 
     public String getSubcategory() {
         return subcategory;
     }
 
-    public void setSubcategory(String subcategory) {
+    public AccountInfo setSubcategory(String subcategory) {
         this.subcategory = subcategory;
+        return this;
     }
 
     public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public AccountInfo setLocation(Location location) {
         this.location = location;
+        return this;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public AccountInfo setCountry(String country) {
         this.country = country;
+        return this;
     }
 
     public String getWebhook() {
         return webhook;
     }
 
-    public void setWebhook(String webhook) {
+    public AccountInfo setWebhook(String webhook) {
         this.webhook = webhook;
+        return this;
     }
 
     public List<EventType> getEventTypes() {
         return eventTypes;
     }
 
-    public void setEventTypes(List<EventType> eventTypes) {
+    public AccountInfo setEventTypes(List<EventType> eventTypes) {
         this.eventTypes = eventTypes;
+        return this;
     }
 
     public List<Profile> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Profile> members) {
+    public AccountInfo setMembers(List<Profile> members) {
         this.members = members;
+        return this;
     }
 
     public Integer getSubscribersCount() {
         return subscribersCount;
     }
 
-    public void setSubscribersCount(Integer subscribersCount) {
+    public AccountInfo setSubscribersCount(Integer subscribersCount) {
         this.subscribersCount = subscribersCount;
+        return this;
     }
 }

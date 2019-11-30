@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.net.HttpHeaders;
 import com.viber.bot.api.*;
-import com.viber.bot.event.EventListener;
-import com.viber.bot.event.EventType;
-import com.viber.bot.event.IncomingEvent;
-import com.viber.bot.message.Message;
-import com.viber.bot.message.Profile;
+import com.viber.bot.events.*;
+import com.viber.bot.listeners.*;
+import com.viber.bot.listeners.EventListener;
+import com.viber.bot.messages.Message;
+import com.viber.bot.messages.Profile;
 import com.viber.bot.server.CallbackServer;
 import com.viber.bot.server.DefaultHandler;
 import com.viber.bot.util.SignatureValidator;
@@ -33,7 +33,7 @@ public class ViberBot {
     private CallbackServer callbackServer;
     private SignatureValidator signatureValidator;
 
-    private Map<EventType, Collection<EventListener>> eventListeners = new HashMap<>();
+    private Set<EventListener> eventListeners = new HashSet<>();
 
     public ViberBot(String name, String token) {
         this.profile = new Profile(name);
@@ -51,20 +51,75 @@ public class ViberBot {
         this.profile = profile;
     }
 
-    public void addEventListener(EventType type, EventListener listener) {
-        Collection<EventListener> listeners = eventListeners.getOrDefault(type, new ArrayList<>());
-        listeners.add(listener);
-        eventListeners.put(type, listeners);
+    public void addMessageListener(OnMessageListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addDeliveredListener(OnDeliveredListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addSeenListener(OnSeenListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addSubscribedListener(OnSubscribedListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addUnsubscribedListener(OnUnsubscribedListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addConversationStartedListener(OnConversationStartedListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addWebhookListener(OnWebhookListener listener) {
+        addEventListener(listener);
+    }
+
+    public void addFailedListener(OnFailedListener listener) {
+        addEventListener(listener);
+    }
+
+    protected void addEventListener(EventListener listener) {
+        eventListeners.add(listener);
     }
 
     public void removeEventListener(EventListener listener) {
-        eventListeners.values().stream()
-                .filter(listeners -> listeners.contains(listener))
-                .forEach(listeners -> listeners.remove(listener));
+        eventListeners.remove(listener);
     }
 
-    public void removeEventListeners(EventType type) {
-        eventListeners.remove(type);
+    public void handle(IncomingEvent event) {
+        handle(event, null);
+    }
+
+    public void handle(IncomingEvent event, org.glassfish.grizzly.http.server.Response response) {
+        eventListeners.forEach(listener -> {
+            if (listener instanceof OnMessageListener) {
+                ((OnMessageListener) listener).handle((IncomingMessageEvent) event, response);
+            } else if (listener instanceof OnDeliveredListener) {
+                ((OnDeliveredListener) listener).handle((IncomingDeliveredEvent) event, response);
+            } else if (listener instanceof OnSeenListener) {
+                ((OnSeenListener) listener).handle((IncomingSeenEvent) event, response);
+            } else if (listener instanceof OnSubscribedListener) {
+                ((OnSubscribedListener) listener).handle((IncomingSubscribedEvent) event, response);
+            } else if (listener instanceof OnUnsubscribedListener) {
+                ((OnUnsubscribedListener) listener).handle((IncomingUnsubscribedEvent) event, response);
+            } else if (listener instanceof OnConversationStartedListener) {
+                ((OnConversationStartedListener) listener).handle((IncomingConversationStartedEvent) event, response);
+            } else if (listener instanceof OnWebhookListener) {
+                ((OnWebhookListener) listener).handle((IncomingWebhookEvent) event, response);
+            } else if (listener instanceof OnFailedListener) {
+                ((OnFailedListener) listener).handle((IncomingFailedEvent) event, response);
+            }
+        });
+    }
+
+    public void listen(String host, int port, String path) throws IOException {
+        callbackServer.addCallbackHandler(path, new DefaultHandler(this));
+        callbackServer.listen(host, port);
     }
 
     public ApiResponse setWebhook(String url) {
@@ -78,18 +133,6 @@ public class ViberBot {
                 .setEventTypes(Arrays.asList(eventTypes)), ApiResponse.class);
     }
 
-    public void handle(IncomingEvent event) {
-        Collection<EventListener> listeners = eventListeners.get(event.getEvent());
-        if (listeners != null) {
-            listeners.forEach(listener -> listener.handle(event));
-        }
-    }
-
-    public void listen(String host, int port, String path) throws IOException {
-        callbackServer.addCallbackHandler(path, new DefaultHandler(this));
-        callbackServer.listen(host, port);
-    }
-
     public AccountInfo getAccountInfo() {
         return executeRequest(Endpoint.GET_ACCOUNT_INFO,
                 new HashMap<>(), AccountInfo.class);
@@ -100,7 +143,7 @@ public class ViberBot {
                 ImmutableMap.of("id", userId), UserDetails.class);
     }
 
-    public OnlineStatus getOnlineStatus(Collection<String> userIds) {
+    public OnlineStatus getOnlineStatus(String... userIds) {
         return executeRequest(Endpoint.GET_ONLINE_STATUS,
                 ImmutableMap.of("ids", userIds), OnlineStatus.class);
     }
@@ -131,7 +174,11 @@ public class ViberBot {
                     .addHeader(HttpHeaders.USER_AGENT, USER_AGENT)
                     .post(RequestBody.create(content, MediaType.parse(CONTENT_TYPE)))
                     .build()).execute();
-            response = httpResponse.body().string();
+            ResponseBody body = httpResponse.body();
+            if (body == null) {
+                throw new ApiException("Cannot get body content from cached request");
+            }
+            response = body.string();
         } catch (IOException e) {
             throw new ApiException(String.format("Cannot execute request %s with payload %s", endpoint, payload), e);
         }

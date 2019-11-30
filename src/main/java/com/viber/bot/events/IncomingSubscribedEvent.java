@@ -1,4 +1,4 @@
-package com.viber.bot.api;
+package com.viber.bot.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,7 +7,7 @@ import com.viber.bot.messages.Profile;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDetails extends ApiResponse {
+public class IncomingSubscribedEvent extends IncomingEvent {
 
     @JsonProperty(value = "user")
     protected Profile user;
@@ -16,7 +16,7 @@ public class UserDetails extends ApiResponse {
         return user;
     }
 
-    public UserDetails setUser(Profile user) {
+    public IncomingSubscribedEvent setUser(Profile user) {
         this.user = user;
         return this;
     }

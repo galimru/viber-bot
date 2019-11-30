@@ -3,7 +3,7 @@ package com.viber.bot.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.viber.bot.event.EventType;
+import com.viber.bot.events.EventType;
 
 import java.util.List;
 

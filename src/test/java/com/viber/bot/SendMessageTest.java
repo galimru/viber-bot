@@ -2,10 +2,10 @@ package com.viber.bot;
 
 import com.google.common.collect.ImmutableList;
 import com.viber.bot.api.ApiResponse;
-import com.viber.bot.message.ActionType;
-import com.viber.bot.message.Button;
-import com.viber.bot.message.Keyboard;
-import com.viber.bot.message.TextMessage;
+import com.viber.bot.messages.ActionType;
+import com.viber.bot.messages.Button;
+import com.viber.bot.messages.Keyboard;
+import com.viber.bot.messages.TextMessage;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -17,15 +17,17 @@ public class ApiResponse {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public ApiResponse setStatus(Integer status) {
         this.status = status;
+        return this;
     }
 
     public String getStatusMessage() {
         return statusMessage;
     }
 
-    public void setStatusMessage(String statusMessage) {
+    public ApiResponse setStatusMessage(String statusMessage) {
         this.statusMessage = statusMessage;
+        return this;
     }
 }
