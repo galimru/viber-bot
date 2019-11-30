@@ -36,6 +36,7 @@ public class ViberBot {
     private OkHttpClient httpClient;
     private CallbackServer callbackServer;
     private SignatureValidator signatureValidator;
+    private Integer minApiVersion;
 
     private Set<EventListener> eventListeners = new HashSet<>();
 
@@ -47,12 +48,12 @@ public class ViberBot {
         this.signatureValidator = new SignatureValidator(token);
     }
 
-    public Profile getProfile() {
-        return profile;
-    }
-
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public void setMinApiVersion(Integer minApiVersion) {
+        this.minApiVersion = minApiVersion;
     }
 
     public void addMessageListener(OnMessageListener listener) {
@@ -186,6 +187,9 @@ public class ViberBot {
     public ApiResponse sendMessage(String userId, Message message) {
         message.setReceiver(userId);
         message.setSender(profile);
+        if (minApiVersion != null && message.getMinApiVersion() == null) {
+            message.setMinApiVersion(minApiVersion);
+        }
         return executeRequest(Endpoint.SEND_MESSAGE, message, ApiResponse.class);
     }
 
