@@ -28,8 +28,8 @@ public class DefaultHandler implements CallbackHandler {
     @Override
     public void handle(Request request, Response response) throws IOException {
         if (request.getMethod() == Method.POST) {
-            String content = CharStreams.toString(request.getReader());
             String signature = request.getHeader(ViberBot.SIGNATURE_HEADER);
+            String content = CharStreams.toString(request.getReader());
             if (!viberBot.validateJson(signature, content)) {
                 logger.warn("Signature validation failed: signature {}, content {}", signature, content);
                 response.sendError(HttpStatus.FORBIDDEN_403.getStatusCode());

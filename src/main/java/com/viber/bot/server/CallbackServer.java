@@ -8,8 +8,6 @@ import java.io.IOException;
 public class CallbackServer {
 
     private final static String SERVER_NAME = "grizzly";
-    private final static String DEFAULT_HOST = "localhost";
-    private final static int DEFAULT_PORT = 80;
 
     private HttpServer httpServer;
 
@@ -32,10 +30,10 @@ public class CallbackServer {
 
     public void listen(String host, Integer port) throws IOException {
         if (host == null) {
-            host = DEFAULT_HOST;
+            host = NetworkListener.DEFAULT_NETWORK_HOST;
         }
         if (port == null) {
-            port = DEFAULT_PORT;
+            port = NetworkListener.DEFAULT_NETWORK_PORT;
         }
         NetworkListener networkListener = new NetworkListener(SERVER_NAME, host, port);
         httpServer.addListener(networkListener);
