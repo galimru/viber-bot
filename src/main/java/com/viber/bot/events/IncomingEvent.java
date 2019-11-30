@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
+        visible = true,
         property = "event")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = IncomingMessageEvent.class, name = "message"),
