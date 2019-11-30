@@ -101,21 +101,21 @@ public class ViberBot {
 
     public void handle(IncomingEvent event, ServerResponse response) {
         eventListeners.forEach(listener -> {
-            if (listener instanceof OnMessageListener) {
+            if (listener instanceof OnMessageListener && event.getEvent() == EventType.MESSAGE) {
                 ((OnMessageListener) listener).handle((IncomingMessageEvent) event, response);
-            } else if (listener instanceof OnDeliveredListener) {
+            } else if (listener instanceof OnDeliveredListener && event.getEvent() == EventType.DELIVERED) {
                 ((OnDeliveredListener) listener).handle((IncomingDeliveredEvent) event, response);
-            } else if (listener instanceof OnSeenListener) {
+            } else if (listener instanceof OnSeenListener && event.getEvent() == EventType.SEEN) {
                 ((OnSeenListener) listener).handle((IncomingSeenEvent) event, response);
-            } else if (listener instanceof OnSubscribedListener) {
+            } else if (listener instanceof OnSubscribedListener && event.getEvent() == EventType.SUBSCRIBED) {
                 ((OnSubscribedListener) listener).handle((IncomingSubscribedEvent) event, response);
-            } else if (listener instanceof OnUnsubscribedListener) {
+            } else if (listener instanceof OnUnsubscribedListener && event.getEvent() == EventType.UNSUBSCRIBED) {
                 ((OnUnsubscribedListener) listener).handle((IncomingUnsubscribedEvent) event, response);
-            } else if (listener instanceof OnConversationStartedListener) {
+            } else if (listener instanceof OnConversationStartedListener && event.getEvent() == EventType.CONVERSATION_STARTED) {
                 ((OnConversationStartedListener) listener).handle((IncomingConversationStartedEvent) event, response);
-            } else if (listener instanceof OnWebhookListener) {
+            } else if (listener instanceof OnWebhookListener && event.getEvent() == EventType.WEBHOOK) {
                 ((OnWebhookListener) listener).handle((IncomingWebhookEvent) event, response);
-            } else if (listener instanceof OnFailedListener) {
+            } else if (listener instanceof OnFailedListener && event.getEvent() == EventType.FAILED) {
                 ((OnFailedListener) listener).handle((IncomingFailedEvent) event, response);
             }
         });
