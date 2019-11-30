@@ -2,12 +2,16 @@ package com.viber.bot.server;
 
 import com.google.common.base.Preconditions;
 import org.glassfish.grizzly.http.server.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class CallbackServer {
 
     private final static String SERVER_NAME = "grizzly";
+
+    private Logger logger = LoggerFactory.getLogger(CallbackServer.class);
 
     private HttpServer httpServer;
 
@@ -23,7 +27,11 @@ public class CallbackServer {
         configuration.addHttpHandler(new HttpHandler() {
             @Override
             public void service(Request request, Response response) throws Exception {
-                handler.handle(request, response);
+                try {
+                    handler.handle(request, response);
+                } catch (Exception e) {
+                    logger.error(String.format("An error occurred while handling request for path %s", path), e);
+                }
             }
         }, path);
     }
