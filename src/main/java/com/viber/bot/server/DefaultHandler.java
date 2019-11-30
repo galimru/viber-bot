@@ -32,7 +32,7 @@ public class DefaultHandler implements CallbackHandler {
             String content = CharStreams.toString(request.getReader());
             if (!viberBot.validateJson(signature, content)) {
                 logger.warn("Signature validation failed: signature {}, content {}", signature, content);
-                response.sendError(HttpStatus.UNAUTHORIZED_401.getStatusCode());
+                response.sendError(HttpStatus.FORBIDDEN_403.getStatusCode());
                 return;
             }
             IncomingEvent incomingEvent = OBJECT_MAPPER.readValue(content, IncomingEvent.class);
