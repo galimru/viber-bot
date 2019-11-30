@@ -12,6 +12,7 @@ import com.viber.bot.messages.Message;
 import com.viber.bot.messages.Profile;
 import com.viber.bot.server.CallbackServer;
 import com.viber.bot.server.DefaultHandler;
+import com.viber.bot.server.ServerResponse;
 import com.viber.bot.util.SignatureValidator;
 import okhttp3.*;
 
@@ -95,7 +96,7 @@ public class ViberBot {
         handle(event, null);
     }
 
-    public void handle(IncomingEvent event, org.glassfish.grizzly.http.server.Response response) {
+    public void handle(IncomingEvent event, ServerResponse response) {
         eventListeners.forEach(listener -> {
             if (listener instanceof OnMessageListener) {
                 ((OnMessageListener) listener).handle((IncomingMessageEvent) event, response);

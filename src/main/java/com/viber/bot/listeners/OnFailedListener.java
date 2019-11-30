@@ -1,8 +1,8 @@
 package com.viber.bot.listeners;
 
 import com.viber.bot.events.IncomingFailedEvent;
-import org.glassfish.grizzly.http.server.Response;
+import com.viber.bot.server.ServerResponse;
 
 public interface OnFailedListener extends EventListener {
-    void handle(IncomingFailedEvent event, Response response);
+    void handle(IncomingFailedEvent event, ServerResponse response);
 }

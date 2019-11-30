@@ -1,8 +1,8 @@
 package com.viber.bot.listeners;
 
 import com.viber.bot.events.IncomingMessageEvent;
-import org.glassfish.grizzly.http.server.Response;
+import com.viber.bot.server.ServerResponse;
 
 public interface OnMessageListener extends EventListener {
-    void handle(IncomingMessageEvent event, Response response);
+    void handle(IncomingMessageEvent event, ServerResponse response);
 }

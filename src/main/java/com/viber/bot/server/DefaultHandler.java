@@ -36,7 +36,7 @@ public class DefaultHandler implements CallbackHandler {
                 return;
             }
             IncomingEvent incomingEvent = OBJECT_MAPPER.readValue(content, IncomingEvent.class);
-            viberBot.handle(incomingEvent, response);
+            viberBot.handle(incomingEvent, new GrizzlyServerResponse(response));
         } else {
             response.sendError(HttpStatus.METHOD_NOT_ALLOWED_405.getStatusCode());
         }
