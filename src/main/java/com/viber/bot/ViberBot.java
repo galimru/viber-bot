@@ -101,22 +101,49 @@ public class ViberBot {
 
     public void handle(IncomingEvent event, ServerResponse response) {
         eventListeners.forEach(listener -> {
-            if (listener instanceof OnMessageListener && event.getEvent() == EventType.MESSAGE) {
-                ((OnMessageListener) listener).handle((IncomingMessageEvent) event, response);
-            } else if (listener instanceof OnDeliveredListener && event.getEvent() == EventType.DELIVERED) {
-                ((OnDeliveredListener) listener).handle((IncomingDeliveredEvent) event, response);
-            } else if (listener instanceof OnSeenListener && event.getEvent() == EventType.SEEN) {
-                ((OnSeenListener) listener).handle((IncomingSeenEvent) event, response);
-            } else if (listener instanceof OnSubscribedListener && event.getEvent() == EventType.SUBSCRIBED) {
-                ((OnSubscribedListener) listener).handle((IncomingSubscribedEvent) event, response);
-            } else if (listener instanceof OnUnsubscribedListener && event.getEvent() == EventType.UNSUBSCRIBED) {
-                ((OnUnsubscribedListener) listener).handle((IncomingUnsubscribedEvent) event, response);
-            } else if (listener instanceof OnConversationStartedListener && event.getEvent() == EventType.CONVERSATION_STARTED) {
-                ((OnConversationStartedListener) listener).handle((IncomingConversationStartedEvent) event, response);
-            } else if (listener instanceof OnWebhookListener && event.getEvent() == EventType.WEBHOOK) {
-                ((OnWebhookListener) listener).handle((IncomingWebhookEvent) event, response);
-            } else if (listener instanceof OnFailedListener && event.getEvent() == EventType.FAILED) {
-                ((OnFailedListener) listener).handle((IncomingFailedEvent) event, response);
+            switch (event.getEvent()) {
+                case MESSAGE:
+                    if (listener instanceof OnMessageListener) {
+                        ((OnMessageListener) listener).handle((IncomingMessageEvent) event, response);
+                    }
+                    break;
+                case DELIVERED:
+                    if (listener instanceof OnDeliveredListener) {
+                        ((OnDeliveredListener) listener).handle((IncomingDeliveredEvent) event, response);
+                    }
+                    break;
+                case SEEN:
+                    if (listener instanceof OnSeenListener) {
+                        ((OnSeenListener) listener).handle((IncomingSeenEvent) event, response);
+                    }
+                    break;
+                case SUBSCRIBED:
+                    if (listener instanceof OnSubscribedListener) {
+                        ((OnSubscribedListener) listener).handle((IncomingSubscribedEvent) event, response);
+                    }
+                    break;
+                case UNSUBSCRIBED:
+                    if (listener instanceof OnUnsubscribedListener) {
+                        ((OnUnsubscribedListener) listener).handle((IncomingUnsubscribedEvent) event, response);
+                    }
+                    break;
+                case CONVERSATION_STARTED:
+                    if (listener instanceof OnConversationStartedListener) {
+                        ((OnConversationStartedListener) listener).handle((IncomingConversationStartedEvent) event, response);
+                    }
+                    break;
+                case WEBHOOK:
+                    if (listener instanceof OnWebhookListener) {
+                        ((OnWebhookListener) listener).handle((IncomingWebhookEvent) event, response);
+                    }
+                    break;
+                case FAILED:
+                    if (listener instanceof OnFailedListener) {
+                        ((OnFailedListener) listener).handle((IncomingFailedEvent) event, response);
+                    }
+                    break;
+                default:
+                    throw new UnsupportedOperationException(String.format("Event %s is not supported", event.getEvent()));
             }
         });
     }
