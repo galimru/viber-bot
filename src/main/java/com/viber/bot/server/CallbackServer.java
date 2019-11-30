@@ -30,10 +30,6 @@ public class CallbackServer {
         }, path);
     }
 
-    public void listen(String host, int port) throws IOException {
-        listen(null, null);
-    }
-
     public void listen(String host, Integer port) throws IOException {
         if (host == null) {
             host = DEFAULT_HOST;
