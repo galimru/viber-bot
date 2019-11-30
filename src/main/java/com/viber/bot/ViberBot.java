@@ -118,9 +118,13 @@ public class ViberBot {
         });
     }
 
-    public void listen(String host, int port, String path) throws IOException {
+    public void listen(String host, Integer port, String path) throws IOException {
         callbackServer.addCallbackHandler(path, new DefaultHandler(this));
         callbackServer.listen(host, port);
+    }
+
+    public void listen(String path) throws IOException {
+        listen(null, null, path);
     }
 
     public ApiResponse setWebhook(String url) {
