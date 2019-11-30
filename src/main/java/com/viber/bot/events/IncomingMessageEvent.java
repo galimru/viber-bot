@@ -16,6 +16,9 @@ public class IncomingMessageEvent extends IncomingEvent {
     @JsonProperty(value = "message")
     protected Message message;
 
+    @JsonProperty(value = "silent")
+    protected Boolean silent;
+
     public Profile getSender() {
         return sender;
     }
@@ -31,6 +34,15 @@ public class IncomingMessageEvent extends IncomingEvent {
 
     public IncomingMessageEvent setMessage(Message message) {
         this.message = message;
+        return this;
+    }
+
+    public Boolean getSilent() {
+        return silent;
+    }
+
+    public IncomingMessageEvent setSilent(Boolean silent) {
+        this.silent = silent;
         return this;
     }
 }
