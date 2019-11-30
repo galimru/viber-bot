@@ -6,8 +6,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.net.HttpHeaders;
 import com.viber.bot.api.*;
 import com.viber.bot.events.*;
-import com.viber.bot.listeners.*;
 import com.viber.bot.listeners.EventListener;
+import com.viber.bot.listeners.*;
 import com.viber.bot.messages.Message;
 import com.viber.bot.messages.Profile;
 import com.viber.bot.server.CallbackServer;
@@ -17,7 +17,10 @@ import com.viber.bot.util.SignatureValidator;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ViberBot {
 
