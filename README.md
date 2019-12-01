@@ -8,7 +8,7 @@ Use this library to develop a bot for the Viber platform. The official Viber Bot
 
 ## Installation
 
-Import the library to your project using [jitpack](https://jitpack.io/#galimru/viber-bot/2.0.0.S2) repository 
+Import the library to your project using [jitpack](https://jitpack.io/#galimru/viber-bot/2.0.0) repository 
 
 #### Gradle
 
@@ -24,7 +24,7 @@ repositories {
   2. Add the Viber Bot library dependency
 
 ```gradle
-implementation 'com.github.galimru:viber-bot:2.0.0.S12'
+implementation 'com.github.galimru:viber-bot:2.0.0'
 ```
 
 _Note: The JitPack supports both Gradle/Maven build tools, please refer to jitpack [documentation](https://jitpack.io/#galimru/viber-bot) if you want use Maven_
