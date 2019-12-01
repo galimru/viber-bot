@@ -1,4 +1,4 @@
-# Viber Bot for Java ☕
+# Viber Bot for Java ☕️
 
 [![Build Status](https://travis-ci.org/galimru/viber-bot.svg?branch=develop)](https://travis-ci.org/galimru/viber-bot)
 [![Release](https://jitpack.io/v/galimru/viber-bot.svg)](https://jitpack.io/#galimru/viber-bot)
@@ -39,7 +39,7 @@ _Note: The JitPack supports both Gradle/Maven build tools, please refer to jitpa
 
 You also can use own webserver to receive webhook requests. In that case, you will have to transform json body to `IncomingEvent` object using jackson library and provide this object to method `ViberBot#handle()`.
 
-#### Creating an echo bot
+#### Creating an echo bot 🤖
 
 In this example we use ngrok to have external url pointed to local machine on port 8080.
 
@@ -76,7 +76,7 @@ The Viber API requires to use HTTPS for webhook addresses.
 
 * [Viber API Documentation](https://developers.viber.com/docs/all/)
 * [Viber Admin Panel](https://partners.viber.com/login)
-* [Official Viber Bot Java](https://partners.viber.com/login) ️[Deprecated]
+* [Official Viber Bot Java](https://partners.viber.com/login) [Deprecated]
 * [JitPack Repository](https://jitpack.io/#galimru/viber-bot)
 
 ## License
