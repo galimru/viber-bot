@@ -154,6 +154,10 @@ public class ViberBot {
         callbackServer.listen(host, port);
     }
 
+    public void listen(Integer port, String path) throws IOException {
+        listen(null, port, path);
+    }
+
     public void listen(String path) throws IOException {
         listen(null, null, path);
     }

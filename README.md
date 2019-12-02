@@ -76,7 +76,7 @@ The Viber API requires to use HTTPS for webhook addresses.
 
 * [Viber API Documentation](https://developers.viber.com/docs/all/)
 * [Viber Admin Panel](https://partners.viber.com/login)
-* [Official Viber Bot Java](https://partners.viber.com/login) [Deprecated]
+* [Official Viber Bot Java](https://github.com/Viber/viber-bot-java) [Deprecated]
 * [JitPack Repository](https://jitpack.io/#galimru/viber-bot)
 
 ## License
